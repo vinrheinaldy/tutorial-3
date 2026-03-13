@@ -16,6 +16,8 @@ var last_tap_time_left = 0.0
 var last_tap_time_right = 0.0
 const DOUBLE_TAP_DELAY = 0.25 
 
+@onready var animplayer = $AnimatedSprite2D
+
 func _physics_process(delta):
 	if not is_on_floor() and not is_dashing:
 		velocity.y += delta * gravity
@@ -42,13 +44,24 @@ func _physics_process(delta):
 			velocity.y = jump_speed
 			jump_count += 1
 
+	var animation = "idle"
+
 	if not is_dashing:
-		if Input.is_action_pressed("ui_left"):
-			velocity.x = -walk_speed
-		elif Input.is_action_pressed("ui_right"):
-			velocity.x =  walk_speed
+		var direction := Input.get_axis("ui_left", "ui_right")
+		
+		if direction:
+			animation = "jalan_kanan"
+			velocity.x = direction * walk_speed
+			
+			if direction > 0:
+				animplayer.flip_h = false
+			else:
+				animplayer.flip_h = true
 		else:
 			velocity.x = 0
+
+	if animplayer.animation != animation:
+		animplayer.play(animation)
 
 	move_and_slide()
 

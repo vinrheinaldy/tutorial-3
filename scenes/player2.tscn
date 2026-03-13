@@ -1,0 +1,82 @@
+[gd_scene format=3 uid="uid://c75jwtf5oqbgb"]
+
+[ext_resource type="Script" uid="uid://ds7hu4kqombj7" path="res://scenes/player_2.gd" id="1_c08b3"]
+[ext_resource type="Texture2D" uid="uid://dq8t6h3tjt1m6" path="res://assets/kenney_toon-characters-1/Zombie/Tilesheet/character_zombie_sheetHD.png" id="2_agjl5"]
+[ext_resource type="AudioStream" uid="uid://bifuwpysl4lqs" path="res://assets/kenney_impact-sounds/Audio/footstep_concrete_002.ogg" id="3_agjl5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nj5qq"]
+size = Vector2(55, 61)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dj65e"]
+atlas = ExtResource("2_agjl5")
+region = Rect2(0, 0, 192, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hb4is"]
+atlas = ExtResource("2_agjl5")
+region = Rect2(192, 0, 192, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gmtae"]
+atlas = ExtResource("2_agjl5")
+region = Rect2(384, 0, 192, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8l1to"]
+atlas = ExtResource("2_agjl5")
+region = Rect2(576, 0, 192, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3ejgl"]
+atlas = ExtResource("2_agjl5")
+region = Rect2(1152, 512, 192, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_24gv0"]
+atlas = ExtResource("2_agjl5")
+region = Rect2(1344, 512, 192, 256)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dauvq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dj65e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hb4is")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gmtae")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8l1to")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3ejgl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_24gv0")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1382362712]
+script = ExtResource("1_c08b3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1258214855]
+position = Vector2(3.5, -4.5)
+shape = SubResource("RectangleShape2D_nj5qq")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1529244737]
+position = Vector2(0, -12)
+scale = Vector2(0.2916667, 0.28782895)
+sprite_frames = SubResource("SpriteFrames_dauvq")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer" parent="." unique_id=526775593]
+stream = ExtResource("3_agjl5")
+
+[connection signal="frame_changed" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_frame_changed"]
